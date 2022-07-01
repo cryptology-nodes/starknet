@@ -1,26 +1,23 @@
 #!/bin/bash
-
-sleep 1 && curl -s https://raw.githubusercontent.com/cryptology-nodes/main/main/logo.sh |  bash && sleep 2
-
 exists()
 {
   command -v "$1" >/dev/null 2>&1
 }
 if exists curl; then
-	echo ''
+  echo ''
 else
   sudo apt install curl -y < "/dev/null"
 fi
-
-
-
+sleep 1 && curl -s https://raw.githubusercontent.com/cryptology-nodes/main/main/logo.sh |  bash && sleep 2
+echo "==================================================="
+sleep 2
 sudo apt update -y && sudo apt install curl git tmux python3 python3-venv python3-dev build-essential libgmp-dev pkg-config libssl-dev -y
 sudo curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 rustup update stable --force
 cd $HOME
 rm -rf pathfinder
-git clone -b v0.2.2-alpha https://github.com/eqlabs/pathfinder.git
+git clone -b v0.2.1-alpha https://github.com/eqlabs/pathfinder.git
 cd pathfinder/py
 python3 -m venv .venv
 source .venv/bin/activate
@@ -52,11 +49,9 @@ sudo systemctl daemon-reload
 sudo systemctl enable starknetd
 sudo systemctl restart starknetd
 echo "==================================================="
-echo -e '\n\e[42mCheck node status\e[0m\n' && sleep 1
+echo -e '\n\e[42mПеревірити статус ноди:\e[0m\n' && sleep 1
 if [[ `service starknetd status | grep active` =~ "running" ]]; then
-  echo -e "Your StarkNet node \e[32minstalled and works\e[39m!"
-  echo -e "You can check node status by the command \e[7mservice starknetd status\e[0m"
-  echo -e "Press \e[7mQ\e[0m for exit from status menu"
+  echo -e "Ваша StarkNet нода \e[32mустановлена и работает\e[39m!"
 else
-  echo -e "Your StarkNet node \e[31mwas not installed correctly\e[39m, please reinstall."
+  echo -e "Ваша StarkNet нода \e[31mбыла установлена неправильно\e[39m, попробуйте переустановить ноду"
 fi
