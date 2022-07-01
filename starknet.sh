@@ -49,7 +49,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable starknetd
 sudo systemctl restart starknetd
 echo "==================================================="
-echo -e '\n\e[42mПеревірити статус ноди:\e[0m\n' && sleep 1
 if [[ `service starknetd status | grep active` =~ "running" ]]; then
   echo -e "Ваша StarkNet нода \e[32mустановлена и работает\e[39m!"
 else
